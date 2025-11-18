@@ -1,0 +1,10 @@
+/* Global base */
+html {
+  font-size: 62.5%; /* 1rem = 10px */
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f1f4f8;
+}
