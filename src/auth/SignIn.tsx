@@ -34,7 +34,7 @@ const SignIn = () => {
 
 
         {/* <button type="submit" style={{borderRadius:"1rem"}}>Submit</button> */}
-        <Button type="submit" primary radius="1rem">Submit</Button>
+        <Button type="submit" primary radius="1rem">Log in</Button>
       </StyledForm>
           </StyledFormDiv>
 

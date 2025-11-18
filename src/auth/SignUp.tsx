@@ -42,7 +42,7 @@ const SignUp = () => {
         {errors.confirmpassword && <span>Confirm password is required</span>}
 
         {/* <button type="submit" style={{borderRadius:"1rem"}}>Submit</button> */}
-        <Button type="submit" primary radius="1rem">Submit</Button>
+        <Button type="submit" primary radius="1rem">Register</Button>
       </StyledForm>
           </StyledFormDiv>
 
