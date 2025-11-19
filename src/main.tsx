@@ -7,11 +7,14 @@ import './index.css'
 import App from './App.tsx'
 import { theme } from './styles/theme.ts';
 import "./styles/global.css";
+import { BrowserRouter } from 'react-router-dom';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <BrowserRouter>
     <ThemeProvider theme={theme}>
     <App />
     </ThemeProvider>
+    </BrowserRouter>
   </StrictMode>,
 )
