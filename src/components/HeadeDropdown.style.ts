@@ -43,7 +43,7 @@ export const CustomDropdown = styled.div`
   }
 
   .dropdown-item:hover {
-    background: ${({ theme }) => theme.colors.primary};
+    background: ${({ theme }) => theme.colors.orangeLight};
     color: #fff;
   }
 `;

@@ -40,14 +40,14 @@ export const StyledForm = styled.form`
     padding: 12px;
     border: none;
     border-radius: 8px;
-    background: #007bff;
+    background: ${({theme})=>theme.colors.orange};
     color: white;
     font-size: 17px;
     cursor: pointer;
     transition: 0.2s ease;
 
     &:hover {
-      background: #0066d6;
+      background: ${({theme})=>theme.colors.orangeDark};
     }
 
     &:active {
@@ -134,3 +134,13 @@ export const StyledImage = styled.img`
     flex: 1 1 50%;
   }
 `;
+
+
+export const StyledPara=styled.p`
+font-size: 2rem;
+font-weight: 600;
+text-transform: uppercase;
+color: ${({theme})=>theme.colors.orangeDark};
+letter-spacing: 0px;
+
+`

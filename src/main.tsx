@@ -8,13 +8,17 @@ import App from './App.tsx'
 import { theme } from './styles/theme.ts';
 import "./styles/global.css";
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './store/store.ts';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <Provider store={store}>
     <BrowserRouter>
     <ThemeProvider theme={theme}>
     <App />
     </ThemeProvider>
     </BrowserRouter>
+    </Provider>
   </StrictMode>,
 )

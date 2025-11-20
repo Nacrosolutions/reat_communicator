@@ -7,7 +7,7 @@ type ButtonProps = {
 };
 export const Button = styled.button<ButtonProps>`
   background: ${({ primary, theme }) =>
-    primary ? theme.colors[primary] : theme.colors.secondary};
+    primary ? theme.colors["primary"] : theme.colors.secondary};
 
   color: white;
   padding: 10px 20px;

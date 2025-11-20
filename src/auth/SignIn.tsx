@@ -1,8 +1,13 @@
 import { useForm } from "react-hook-form";
-import { CenterWrapper, FormBox, StyledForm, StyledFormDiv, StyledImage } from "./SignUp.styles";
+import { CenterWrapper, FormBox, StyledForm, StyledFormDiv, StyledImage, StyledPara } from "./SignUp.styles";
 import { FormLabel } from "../utils/FormLabel";
 import { Button } from "../utils/Button";
-import illus from "../assets/Wavy_Tech-28_Single-10.jpg"; // added import
+import illus from "../assets/Wavy_Tech-28_Single-10.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from "../store/store";
+import { loginUser } from "./slices/authThunks";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // if you are using react-router
 
 interface FormValues {
   email: string;
@@ -11,37 +16,69 @@ interface FormValues {
 
 const SignIn = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const { loading, error, role } = useSelector((state: RootState) => state.auth);
 
   const onSubmit = (data: FormValues) => {
-    console.log(data);
+    dispatch(loginUser(data));
   };
+
+  // Redirect based on role when login succeeds
+  useEffect(() => {
+    if (role === "admin") {
+      navigate("/");
+    } else if (role === "user") {
+      navigate("/manageUser");
+    }
+  }, [role, navigate]);
 
   return (
     <CenterWrapper>
+      <FormBox>
+        <StyledFormDiv>
+          <StyledForm onSubmit={handleSubmit(onSubmit)}>
+            
+            <StyledPara>Login</StyledPara>
 
-  <FormBox>
-    <StyledFormDiv>
-      <StyledForm onSubmit={handleSubmit(onSubmit)}>
-        
-     
-        <FormLabel htmlFor="email">Email</FormLabel>
-        <input {...register("email", { required: true })} style={{marginBottom:"2rem"}} />
-        {errors.email && <span>Email is required</span>}
+            {/* Display errors from backend */}
+            {error && (
+              <p style={{ color: "red", marginBottom: "1rem" }}>
+                {error}
+              </p>
+            )}
 
-        <FormLabel htmlFor="password">Password</FormLabel>
-        <input {...register("password", { required: true })} type="password"  style={{marginBottom:"2rem"}}/>
-        {errors.password && <span>Password is required</span>}
+            <FormLabel htmlFor="email">Email</FormLabel>
+            <input 
+              {...register("email", { required: "Email is required" })}
+              style={{ marginBottom: "1rem" }}
+            />
+            {errors.email && <span style={{ color: "red" }}>{errors.email.message}</span>}
 
+            <FormLabel htmlFor="password">Password</FormLabel>
+            <input
+              {...register("password", { required: "Password is required" })}
+              type="password"
+              style={{ marginBottom: "1rem" }}
+            />
+            {errors.password && <span style={{ color: "red" }}>{errors.password.message}</span>}
 
-        {/* <button type="submit" style={{borderRadius:"1rem"}}>Submit</button> */}
-        <Button type="submit" primary radius="1rem">Log in</Button>
-      </StyledForm>
-          </StyledFormDiv>
+            <Button 
+              type="submit" 
+              primary="orangeDark" 
+              radius="2rem"
+              disabled={loading}
+            >
+              {loading ? "Logging in..." : "Log in"}
+            </Button>
 
+          </StyledForm>
+        </StyledFormDiv>
       </FormBox>
-             <StyledImage src={illus} alt="signup illustration" />
 
-       </CenterWrapper>
+      <StyledImage src={illus} alt="signup illustration" />
+    </CenterWrapper>
   );
 };
 

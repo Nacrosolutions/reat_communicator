@@ -5,6 +5,7 @@ export const theme = {
     light: "#ffffff",
     dark: "#1f2937",
     lightGray:"#f1ededff",
+    darkGray:"#e3e0e0ff",
 
       orange: "#FF8C00",        // Main orange
   orangeLight: "#FFA94D",   // Light orange

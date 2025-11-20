@@ -173,6 +173,10 @@ export const Button = styled.button<ButtonProps>`
   background-color:${({ theme }) => theme.colors.orange};
 }
 
+  @media (max-width: 1065px) {
+   margin-bottom: 12px;
+  }
+
 `;
 
 export const StyledButton =styled.div`
@@ -180,4 +184,12 @@ export const StyledButton =styled.div`
 display:"flex";
 flex-direction: column;
 justify-content: space-between;
+/* background-color: red; */
+max-width: 400px;
+/* min-width:400px; */
+  @media (max-width: 890px) {
+    /* gap:4px; */
+    /* margin-bottom: 2px; */
+    /* background-color: red; */
+  }
 `
