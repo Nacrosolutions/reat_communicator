@@ -8,6 +8,7 @@ import type { RootState, AppDispatch } from "../store/store";
 import { loginUser } from "./slices/authThunks";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // if you are using react-router
+import { fetchUsers } from "../components/users/slices/userThunks";
 
 interface FormValues {
   email: string;
@@ -21,8 +22,15 @@ const SignIn = () => {
 
   const { loading, error, role } = useSelector((state: RootState) => state.auth);
 
-  const onSubmit = (data: FormValues) => {
-    dispatch(loginUser(data));
+  const onSubmit = async (data: FormValues) => {
+     const result = await dispatch(loginUser(data));
+
+  if (result.meta.requestStatus === "fulfilled") {
+    console.log("TRIGGER");
+    dispatch(fetchUsers());  // ← THIS WAS MISSING
+  }
+  
+    
   };
 
   // Redirect based on role when login succeeds

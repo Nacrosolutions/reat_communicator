@@ -1,5 +1,4 @@
 import './App.css'
-// import ManageUser from './components/users/ManageUser'
 import SignUp from './auth/SignUp'
 import SignIn from './auth/SignIn'
 import ManageUser from './components/users/ManageUser'
@@ -7,47 +6,71 @@ import { Routes, Route } from "react-router-dom";
 import RootLayout from './RootLayout'
 import Welcome from './pages/Welcome'
 import ProtectedRoute from './ProtectedRoute';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { logout } from './auth/slices/authSlice';
+import { fetchUsers } from './components/users/slices/userThunks';
+import type { AppDispatch, RootState } from './store/store';
+import { clearUsers } from './components/users/slices/userSlice';
+import AdminOrGuestRoute from './AdminOrGuestRoute';
+import GuestRoute from './GuestRoute';
 
 function App() {
 
+  const dispatch = useDispatch<AppDispatch>();
 
-  const dispatch=useDispatch();
+  // 🔥 FIX #1 — run fetchUsers() on refresh
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(fetchUsers());
+    }
+  }, [dispatch]);
 
-  useEffect(()=>{
+  // 🔥 FIX #2 — handle storage changes (other tabs)
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const token = localStorage.getItem("token");
 
-    const handleStorageChange=()=>{
-      const token =localStorage.getItem('token');
-      if(!token){
+      if (!token) {
         dispatch(logout());
+        dispatch(clearUsers());
       }
-    }
-    window.addEventListener("storage",handleStorageChange);
+   
+      dispatch(fetchUsers());
+    };
 
-    return ()=>{
-      window.removeEventListener("storage",handleStorageChange)
-    }
-  },[dispatch])  
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [dispatch]);
+
   return (
-    
     <Routes>
-<Route path='/' element ={<RootLayout/>} >
- <Route index  element={<Welcome />} /> 
+      <Route path='/' element={<RootLayout />}>
+        
+        <Route index element={<Welcome />} /> 
+        
+        <Route path="signup" element={ <AdminOrGuestRoute><SignUp /></AdminOrGuestRoute>} /> 
+        
+          
+       <Route path="signin" element={<GuestRoute><SignIn /></GuestRoute>} /> 
+       
 
-       <Route path="signup" element={<SignUp />} /> 
- <Route path="signin" element={<SignIn />} /> 
+        {/* ProtectedRoute */}
+        <Route
+          path="manageUser"
+          element={
+            <ProtectedRoute>
+              <ManageUser />
+            </ProtectedRoute>
+          }
+        />
 
-     // ProtectedRoute
-
-
-
- <Route path="manageUser" element={ <ProtectedRoute><ManageUser /></ProtectedRoute>} /> 
-
-</Route>
+      </Route>
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;

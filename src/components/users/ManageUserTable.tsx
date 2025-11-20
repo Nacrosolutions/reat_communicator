@@ -1,7 +1,7 @@
 import { StyledMangedUserDiv } from "./ManageUserTable.style";
 
 interface User {
-    id:number;
+    id:string;
     name:string;
     email:string;
 
@@ -11,7 +11,7 @@ interface User {
 const ManageUserTable=({data,onEdit,onDelete}:{
     data:User[],
     onEdit:(user:User)=>void,
-    onDelete:(id:number)=>void
+    onDelete:(id:string)=>void
 })=>{
 
 return (
@@ -28,8 +28,9 @@ return (
             </thead>
 <tbody>
           {data.map((user) => (
+
           <tr key={user.id}>
-            <td>{user.id}</td>
+            <td>{user.id.slice(0,4)}</td>
             <td>{user.name}</td>
             <td>{user.email}</td>
 
