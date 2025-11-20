@@ -1,10 +1,12 @@
+import { Link } from "react-router-dom";
 import { CustomDropdown } from "./HeadeDropdown.style";
 
 interface HeaderDropdownProps {
   props: string[]; 
+  toList:string[]
 }
 
-const HeaderDropdown = ({props}:HeaderDropdownProps) => {
+const HeaderDropdown = ({props,toList}:HeaderDropdownProps) => {
   return (
     <CustomDropdown>
       <div className="dropdown">
@@ -17,7 +19,7 @@ const HeaderDropdown = ({props}:HeaderDropdownProps) => {
 
         <ul className="dropdown-menu">
 
-          {props.map(elNode=><li><button className="dropdown-item">{elNode}</button></li>)}
+          {props.map((elNode,index)=><Link  to={toList[index]}className="dropdown-item">{elNode}</Link>)}
    
         </ul>
       </div>

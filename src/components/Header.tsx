@@ -10,7 +10,7 @@ const Header =()=>{
   </div>
 
   <div>
-    <HeaderDropdown props={["option1","option2"]}></HeaderDropdown>
+    <HeaderDropdown props={["Home","Manage User"]} toList={["/","/manageUser"]}></HeaderDropdown>
   </div>
 
         </StyledHeaderDiv>

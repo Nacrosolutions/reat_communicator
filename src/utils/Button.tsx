@@ -1,13 +1,16 @@
 import styled from "styled-components";
+import type { theme } from "../styles/theme";
 
 type ButtonProps = {
-  primary?: boolean;
+  primary?: keyof typeof theme.colors; // OR simply string
   radius?: string;
 };
-
 export const Button = styled.button<ButtonProps>`
-  background: ${(props) => (props.primary ? "blue" : "gray")};
+  background: ${({ primary, theme }) =>
+    primary ? theme.colors[primary] : theme.colors.secondary};
+
   color: white;
   padding: 10px 20px;
-  border-radius: ${(props) => props.radius || "0px"};
+  border-radius: ${({ radius }) => radius || "0px"};
+
 `;

@@ -4,7 +4,11 @@ export const theme = {
     secondary: "#64748b",
     light: "#ffffff",
     dark: "#1f2937",
-    lightGray:"#f1ededff"
+    lightGray:"#f1ededff",
+
+      orange: "#FF8C00",        // Main orange
+  orangeLight: "#FFA94D",   // Light orange
+  orangeDark: "#E25822",    // Deep orange
   },
 
   spacing: {
